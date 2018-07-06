@@ -1,4 +1,4 @@
-# sdn-tutorial
+# Introductie van SDN
 
 Welkom bij deze tutorial waar je kennis zult maken met Software Defined Networking. Na het volgend van deze tutorial heb je je eigen virtuele omgeving opgezet en zou je in staat moten zijn om met `Mininet` een gevirtualiseerd netwerk op te zetten dat aangestuurd gaat worden met de `ONOS` (SDN) controller. op deze controller kan je een specifieke applicatie installeren die door middel van `Intents` het verkeer door het netwerk stuurt. Ook zal deze tutorial alles in de juiste context te plaatsen.
 
@@ -10,8 +10,12 @@ Je hoeft geen netwerk expert te zijn om dit te kunnen volgen, maar het is de bed
 
 ![banner image](/images/tutorial-banner.png)
 
+1. [Voorbereiding](#voorbereiding)
+
+
 &nbsp;
-### Voorbereiding ###
+---
+## Voorbereiding <a name="voorbereiding"></a>
 Voordat we kunnen beginnen moeten we de virtuele omgeving opzetten. We gaan onze eigen Virtuele Machine inrichting die draait in VirtualBox.
 VirtualBox kun je [hier](https://www.virtualbox.org/wiki/Downloads) downloaden, de VM die we gaan uitbreiden kan je [hier]((https://github.com/mininet/mininet/wiki/Mininet-VM-Images)) downloaden.
 Op deze VM staat al `Mininet` geïnstalleerd, maar we gaan deze uitbreiden met een GUI, web browser en intallatie van de `ONOS` controller.
@@ -68,6 +72,7 @@ Je kan deze bestanden in een `.zip` map downloaden (op de VM zelf).
 Uiteindelijk moeten deze bestanden in je home-folder terecht komen (`/home/mininet`).
 
 &nbsp;
+---
 ### Ontdek ONOS (Open Network Operating System) ###
 ONOS is een _open source_ controller, geschreven in Java.
 Je mag de code gratis gebruiken, inzien en naar eigen believen aanpassen (op je eigen systeem).
@@ -103,6 +108,7 @@ __Extra__: _in het commando `apps -s -a` betekent de optie `-s` dat je een samen
 ONOS sluit je af met het commando `logout`.
 
 &nbsp;
+---
 ### Je eigen netwerk met Mininet ###
 Leuk, zo'n controller, maar we kunnen nog niets omdat we nog geen netwerk hebben!
 `Mininet` is een tool waarmee je gemakkelijk een virtueel netwerk op kan zetten.
@@ -121,7 +127,7 @@ Kortweg doe je de volgende dingen met dit commando:
 Het `OpenFlow` protocol gebruikt standaard port 6633 of 6653, en in dit geval draait de controller op dezelfde computer dus kunnen we het *localhost* IP-adres gebruiken.
 - We definiëren de switches als `Open vSwitch` met `OpenFlow 1.3`.
 - We zetten met `--mac` het gebruik van simpele MAC addressen aan.
-Zo krijgt het IP-adres 10.0.0.1 een MAC 00:00:00:00:00:01).
+Zo krijgt het IP-adres 10.0.0.1 een MAC 00:00:00:00:00:01.
 
 ![tree mininet](/images/mininet-start.png)
 
@@ -131,13 +137,14 @@ Wanneer je alle informatie van het netwerk wil hebben, is het commando `dump` in
 ![dump mininet](/images/dump.png)
 
 &nbsp;
-### Verkeer over je netwerk ###
+##### Verkeer over je netwerk #####
 Wanneer je stiekem net `h1 ping h2` hebt gedaan, kwam je tot de conclusie dat verkeer het nog niet deed.
 Dat komt doordat er nog geen goede functionaliteit op de controller voor is.
 Ga naar de CLI van de controller en activeer de `org.onosproject.fwd` app.
 Initieer vervolgens een nieuwe ping tussen twee hosts via Mininet en *voilà*!
 
 &nbsp;
+---
 ### SDN in detail: App Limitaties ###
 __Belangrijk__: _Vanaf nu heb je de extra bestanden nodig op de VM (in de home-folder)._
 
@@ -182,6 +189,7 @@ In topologieën zonder loops (cirkels) werkt deze app uitstekend en worden er al
 Maar in dit geval kan de controller geen beslissing maken en loopt het verkeer dus spaak.
 
 &nbsp;
+---
 ### SDN in detail: Experimenteer zelf ###
 Gebruik de commando's en ervaring van het vorige gedeelte om te kijken wat er gebeurt met een simpelere topologie, zoals een netwerk met maar 1 switch en daaraan een aantal hosts.
 Om even fris te starten, sluit de controller af (`logout`) en stop Mininet (`exit`). Voer daarnaast in de terminal waar je Mininet laat lopen het commando `sudo mn -c` uit.
@@ -219,6 +227,7 @@ __Extra__: _Je kan de inhoud van pakketten uitpluizen door te kijken naar de Pac
 
 
 &nbsp;
+---
 ### Even een stukje Context ###
 Nu we van alles hebben gezien van met `Mininet`, `ONOS`, `OpenFlow` en `Wireshark`, en ongeveer weten hoe dingen in z'n gang gaan in een Software-Defined Netwerk, is het goed te herhalen wat we hebben gezien en hoe dat allemaal in elkaar past.
 Dit kunnen we doen door te kijken naar de architectuur van ONOS:
@@ -242,6 +251,7 @@ En _last but not least_, alle applicaties zijn door middel van software geschrev
 
 
 &nbsp;
+---
 ### SDN in detail: Intent Forwarding ###
 In het vorige stuk kwam naar voren dat de forwarding app zijn limitaties heeft.
 Nu gaan we een applicatie bekijken die onze problemen oplost!
@@ -294,6 +304,8 @@ De uitkomst is een hele lange lijst met opties die je kunt meegeven aan zelf ged
 En voor deze Intents hoef je helemaal niet na te denken over de route die het verkeer zal afleggen - dat rekenwerk zal de controller uitvoeren en vertalen naar flow rules voor de betrokken switches.
 En dit is geïmplementeerd in de `ifwd` applicatie.
 
+&nbsp;
+---
 #### Experimenteer met Dynamische netwerken ####
 De controller houdt te allen tijde het netwerk en de eisen (ofwel Intents) in de gaten.
 Wanneer je een intent voor verkeer tussen Host 1 en Host 2 weg zou gooien met het commando:
