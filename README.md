@@ -10,11 +10,17 @@ Je hoeft geen netwerk expert te zijn om dit te kunnen volgen, maar het is de bed
 
 ![banner image](/images/tutorial-banner.png)
 
+## Inhoudsopgave
 1. [Voorbereiding](#voorbereiding)
+2. [Ontdek ONOS]((#onos))
+3. [Je eigen netwerk met Mininet](#mininet)
+4. [SDN in detail: App Limitaties](#sdn-1)
+5. [Bestudeer OpenFlow met Wireshark](#wireshark)
+6. [Even een stukje Context](#context)
+7. [SDN in detail: Intent Based Forwarding](#sdn-2)
 
 
 &nbsp;
----
 ## Voorbereiding <a name="voorbereiding"></a>
 Voordat we kunnen beginnen moeten we de virtuele omgeving opzetten. We gaan onze eigen Virtuele Machine inrichting die draait in VirtualBox.
 VirtualBox kun je [hier](https://www.virtualbox.org/wiki/Downloads) downloaden, de VM die we gaan uitbreiden kan je [hier]((https://github.com/mininet/mininet/wiki/Mininet-VM-Images)) downloaden.
@@ -72,8 +78,7 @@ Je kan deze bestanden in een `.zip` map downloaden (op de VM zelf).
 Uiteindelijk moeten deze bestanden in je home-folder terecht komen (`/home/mininet`).
 
 &nbsp;
----
-### Ontdek ONOS (Open Network Operating System) ###
+## Ontdek ONOS (Open Network Operating System) <a name="onos"></a>
 ONOS is een _open source_ controller, geschreven in Java.
 Je mag de code gratis gebruiken, inzien en naar eigen believen aanpassen (op je eigen systeem).
 Programmeurs over heel de wereld hebben hieraan meegewerkt.
@@ -108,8 +113,7 @@ __Extra__: _in het commando `apps -s -a` betekent de optie `-s` dat je een samen
 ONOS sluit je af met het commando `logout`.
 
 &nbsp;
----
-### Je eigen netwerk met Mininet ###
+## Je eigen netwerk met Mininet <a name="mininet"></a>
 Leuk, zo'n controller, maar we kunnen nog niets omdat we nog geen netwerk hebben!
 `Mininet` is een tool waarmee je gemakkelijk een virtueel netwerk op kan zetten.
 Dez tool wordt voornamelijk gebruikt om netwerkjes te creëren dat `Open vSwitches` bevat.
@@ -137,15 +141,14 @@ Wanneer je alle informatie van het netwerk wil hebben, is het commando `dump` in
 ![dump mininet](/images/dump.png)
 
 &nbsp;
-##### Verkeer over je netwerk #####
+#### Verkeer over je netwerk
 Wanneer je stiekem net `h1 ping h2` hebt gedaan, kwam je tot de conclusie dat verkeer het nog niet deed.
 Dat komt doordat er nog geen goede functionaliteit op de controller voor is.
 Ga naar de CLI van de controller en activeer de `org.onosproject.fwd` app.
 Initieer vervolgens een nieuwe ping tussen twee hosts via Mininet en *voilà*!
 
 &nbsp;
----
-### SDN in detail: App Limitaties ###
+## SDN in detail: App Limitaties <a name="sdn-1"></a>
 __Belangrijk__: _Vanaf nu heb je de extra bestanden nodig op de VM (in de home-folder)._
 
 Nu gaan we wat gedetailleerder kijken naar hoe SDN werkt.
@@ -189,8 +192,7 @@ In topologieën zonder loops (cirkels) werkt deze app uitstekend en worden er al
 Maar in dit geval kan de controller geen beslissing maken en loopt het verkeer dus spaak.
 
 &nbsp;
----
-### SDN in detail: Experimenteer zelf ###
+#### Experimenteer zelf
 Gebruik de commando's en ervaring van het vorige gedeelte om te kijken wat er gebeurt met een simpelere topologie, zoals een netwerk met maar 1 switch en daaraan een aantal hosts.
 Om even fris te starten, sluit de controller af (`logout`) en stop Mininet (`exit`). Voer daarnaast in de terminal waar je Mininet laat lopen het commando `sudo mn -c` uit.
 Start vervolgens de controller opnieuw en start Mininet met het commando:
@@ -201,8 +203,8 @@ sudo mn --mac --topo single,4 --controller remote,ip=127.0.0.1,port=6633 --switc
 Controlleer of de forwarding app nog geactiveerd is (verwachting is van wel), en doe nog eens een `pingall` of misschien leuker nog, een `h2 ping h3`.
 Gebruik vervolgens de commando's van hierboven om uit te pluizen wat het resultaat is.
 
-
-#### Wireshark: Onderzoek het OpenFlow verkeer ####
+&nbsp;
+## Wireshark: Onderzoek het OpenFlow verkeer <a name="wireshark"></a>
 Onos gebruikt het OpenFlow protocol om flow rules te installeren op de Open vSwitches, maar in feite hebben we tot nu toe weinig van dit protocol gezien.
 We kunnen dit verkeer onderzoeken met de packet-sniffer `Wireshark`.
 
@@ -227,8 +229,7 @@ __Extra__: _Je kan de inhoud van pakketten uitpluizen door te kijken naar de Pac
 
 
 &nbsp;
----
-### Even een stukje Context ###
+## Even een stukje Context <a name="context"></a>
 Nu we van alles hebben gezien van met `Mininet`, `ONOS`, `OpenFlow` en `Wireshark`, en ongeveer weten hoe dingen in z'n gang gaan in een Software-Defined Netwerk, is het goed te herhalen wat we hebben gezien en hoe dat allemaal in elkaar past.
 Dit kunnen we doen door te kijken naar de architectuur van ONOS:
 ![onos-architectuur](/images/onos-architecture.png)
@@ -251,8 +252,7 @@ En _last but not least_, alle applicaties zijn door middel van software geschrev
 
 
 &nbsp;
----
-### SDN in detail: Intent Forwarding ###
+## SDN in detail: Intent Based Forwarding <a name="sdn-2"></a>
 In het vorige stuk kwam naar voren dat de forwarding app zijn limitaties heeft.
 Nu gaan we een applicatie bekijken die onze problemen oplost!
 Deze applicatie werkt met zogenaamde _Intents_.
@@ -306,7 +306,7 @@ En dit is geïmplementeerd in de `ifwd` applicatie.
 
 &nbsp;
 ---
-#### Experimenteer met Dynamische netwerken ####
+#### Experimenteer met Dynamische netwerken
 De controller houdt te allen tijde het netwerk en de eisen (ofwel Intents) in de gaten.
 Wanneer je een intent voor verkeer tussen Host 1 en Host 2 weg zou gooien met het commando:
 ```
