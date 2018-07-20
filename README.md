@@ -1,16 +1,16 @@
 # Introductie van SDN
 
-Welkom bij deze tutorial waar je kennis zult maken met Software Defined Networking. 
-Na het volgen van deze tutorial heb je je eigen virtuele omgeving opgezet en zou je in staat moten zijn om met `Mininet` een gevirtualiseerd netwerk op te zetten dat aangestuurd wordt door de `ONOS` (SDN) controller. 
-Op deze controller kan je een specifieke applicatie installeren die door middel van `Intents` het verkeer door het netwerk stuurt. 
+Welkom bij deze tutorial waar je kennis zult maken met Software Defined Networking.
+Na het volgen van deze tutorial heb je je eigen virtuele omgeving opgezet en zou je in staat moeten zijn om met `Mininet` een gevirtualiseerd netwerk op te zetten dat aangestuurd wordt door de `ONOS` (SDN) controller.
+Op deze controller kan je een specifieke applicatie installeren die door middel van `Intents` het verkeer door het netwerk stuurt.
 Ook zal deze tutorial alles in de juiste context te plaatsen.
 
 _Deze tutorial volgt de eerste versie van de SDN tutorial welke in PDF vorm te downloaden is._
 _Daarnaast is er een kleine powerpoint waarin je kunt zien hoe communicatie verloopt in een traditioneel netwerk en in een SDN netwerk._
 
 ##### Benodigde kennis #####
-Je hoeft geen netwerk expert te zijn om dit te kunnen volgen; het is de bedoeling dat je je juist een beetje netwerk expert gáát voelen. 
-Daarnaast gaan we onze eigen virtuele omgeving opzetten en werken we veelal met de command line interface (CLI). 
+Je hoeft geen netwerk expert te zijn om dit te kunnen volgen; het is de bedoeling dat je je juist een beetje netwerk expert gáát voelen.
+Daarnaast gaan we onze eigen virtuele omgeving opzetten en werken we veelal met de command line interface (CLI).
 Wees gedurende de tutorial vooral niet bang om random dingen te proberen en op te zoeken - het Internet is je vriend!
 
 ![banner image](/images/tutorial-banner.png)
@@ -27,7 +27,7 @@ Wees gedurende de tutorial vooral niet bang om random dingen te proberen en op t
 
 &nbsp;
 ## Voorbereiding <a name="voorbereiding"></a>
-Voordat we kunnen beginnen moeten we de virtuele omgeving opzetten. 
+Voordat we kunnen beginnen moeten we de virtuele omgeving opzetten.
 We gaan onze eigen Virtuele Machine inrichting die draait in VirtualBox.
 VirtualBox kun je [hier](https://www.virtualbox.org/wiki/Downloads) downloaden, de VM die we gaan uitbreiden kan je [hier]((https://github.com/mininet/mininet/wiki/Mininet-VM-Images)) downloaden.
 Op deze VM staat al `Mininet` geïnstalleerd, maar we gaan deze uitbreiden met o.a. een GUI, web browser en intallatie van de `ONOS` controller.
@@ -35,7 +35,7 @@ Op deze VM staat al `Mininet` geïnstalleerd, maar we gaan deze uitbreiden met o
 Wanneer je de VM hebt geïmporteerd in VirtualBox, start deze dan nog niet op, maar ga naar de instellingen van de VM.
 In het sub-menu voor 'Systeem', zet het geheugen op 2048MB.
 Controleer in het sub-menu 'Netwerk' of Adapter 1 aan staat en op NAT ingesteld staat.
-Wanneer je de VM opstart, kom je in een terminal terecht. De VM heeft nog niets anders. 
+Wanneer je de VM opstart, kom je in een terminal terecht. De VM heeft nog niets anders.
 Allereerst de inloggegevens, deze zijn `mininet/mininet`.
 Vervolgens, in de terminal, voer je de volgende commando's uit:
 
@@ -174,8 +174,8 @@ Vervolgens zien we iets wat hierop lijkt:
 
 Neem de tijd om op deze pagina wat te experimenteren.
 Je kan op verbindingen en op switches klikken (ook op hosts zodra ze zijn verschenen) en de portnummers verschijnen.
-Gebruik de `/` toets om het menu met sneltoetsen te open en nog meer opties te ontdekken.
-Zorg bijvoorbeld dat `Host Visibility` aanstaat met de sneltoets `H`.
+Gebruik de `/` toets om het menu met sneltoetsen te openen en nog meer opties te ontdekken.
+Zorg bijvoorbeeld dat `Host Visibility` aanstaat met de sneltoets `H`.
 
 Activeer nu (als dat nog niet zo is) de app `org.onosproject.fwd` op de controller en voer in Mininet het commando `pingall` uit.
 Terwijl je dit doet, __let op de GUI__.
@@ -201,7 +201,8 @@ Maar in dit geval kan de controller geen beslissing maken en loopt het verkeer d
 &nbsp;
 #### Experimenteer zelf
 Gebruik de commando's en ervaring van het vorige gedeelte om te kijken wat er gebeurt met een simpelere topologie, zoals een netwerk met maar 1 switch en daaraan een aantal hosts.
-Om even fris te starten, sluit de controller af (`logout`) en stop Mininet (`exit`). Voer daarnaast in de terminal waar je Mininet laat lopen het commando `sudo mn -c` uit.
+Om even fris te starten, sluit de controller af (`logout`) en stop Mininet (`exit`).
+Voer daarnaast in de terminal waar je Mininet laat lopen het commando `sudo mn -c` uit.
 Start vervolgens de controller opnieuw en start Mininet met het commando:
 ```
 sudo mn --mac --topo single,4 --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
@@ -244,7 +245,7 @@ Dit kunnen we doen door te kijken naar de architectuur van ONOS:
 Eigenlijk is de ONOS-implementatie de vormgeving van de gele, zwarte en groene laag:
 De core van de controller ondersteunt aan de boven- en onderkant verschillende verbindingen met externe ‘dingen’.
 Aan de onderkant is dat de verbinding met netwerkapparatuur.
-In deze tutorial is er gefocust op het OpenFlow protocol, dat gebruikt wordt om de flow tables van SDN-enabled switches, zoals Open vSwitch, te vullen.
+In deze tutorial is er gefocust op het OpenFlow protocol, dat gebruikt wordt om de flow tables te vullen van SDN-enabled switches, zoals Open vSwitch.
 Deze SDN-enabled switches hebben we in deze tutorial opgezet met behulp van Mininet.
 
 De core implementeert de basis functionaliteit van de controller, maar uiteindelijk zullen de applicaties bovenop de controller bepalen hoe het netwerk functioneert.
