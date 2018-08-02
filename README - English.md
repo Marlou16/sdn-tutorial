@@ -14,7 +14,7 @@ If you are not familiar with these things, don't be afraid to aks your friend th
 
 ![banner image](/images/tutorial-banner.png)
 
-## Inhoudsopgave
+## Contents
 1. [Preparation](#voorbereiding)
 2. [Discover ONOS](#onos)
 3. [Creating your network with Mininet](#mininet)
@@ -49,7 +49,7 @@ We need `java(8)`:
 sudo apt-get install python-software-properties software-properties-common
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracel-java8-installer oracle-java8-set-default
+sudo apt-get install oracle-java8-installer oracle-java8-set-default
 ```
 
 install additional software: `Wireshark`, web browser and text-editor:
