@@ -43,7 +43,7 @@ __let op: zorg dat je NIET op een/het bedrijfsnetwerk zit__
 
 installeer de GUI en VM Guest Additions (voor een betere resolutie):
 ```
-sudp apt-get update
+sudo apt-get update
 sudo apt-get install xinit lxterminal lxde-common lxsession openbox
 sudo apt-get install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
 ```
