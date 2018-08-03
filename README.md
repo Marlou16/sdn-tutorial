@@ -72,7 +72,7 @@ Dit kan je controleren met het commando `pwd`.
 Voor __ONOS__, ga op de VM naar [deze site](https://wiki.onosproject.org/display/ONOS/Downloads) (op de VM!) en download eerst 1.10.4 versie in `tar.gz` formaat. Doe vervolgens:
 ```
 cd Downloads
-tar -zxvf onos-1.10.4-tar.gz
+tar -zxvf onos-1.10.4.tar.gz
 mv onos-1.10.4 ~/
 cd ..
 ```
