@@ -53,7 +53,7 @@ We hebben `java(8)` nodig:
 sudo apt-get install python-software-properties software-properties-common
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracel-java8-installer oracle-java8-set-default
+sudo apt-get install oracle-java8-installer oracle-java8-set-default
 ```
 
 installeer additional software: `Wireshark`, een browser en text-editor.
