@@ -69,7 +69,7 @@ To get __ONOS__, at the VM visit [this site](https://wiki.onosproject.org/displa
 Then:
 ```
 cd Downloads
-tar -zxvf onos-1.10.4-tar.gz
+tar -zxvf onos-1.10.4.tar.gz
 mv onos-1.10.4 ~/
 cd ..
 ```
