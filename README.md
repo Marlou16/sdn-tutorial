@@ -29,7 +29,7 @@ Wees gedurende de tutorial vooral niet bang om random dingen te proberen en op t
 ## Voorbereiding <a name="voorbereiding"></a>
 Voordat we kunnen beginnen moeten we de virtuele omgeving opzetten.
 We gaan onze eigen Virtuele Machine inrichting die draait in VirtualBox.
-VirtualBox kun je [hier](https://www.virtualbox.org/wiki/Downloads) downloaden, de VM die we gaan uitbreiden kan je [hier]((https://github.com/mininet/mininet/wiki/Mininet-VM-Images)) downloaden.
+VirtualBox kun je [hier](https://www.virtualbox.org/wiki/Downloads) downloaden, de VM die we gaan uitbreiden kan je [hier](https://github.com/mininet/mininet/wiki/Mininet-VM-Images) downloaden.
 Op deze VM staat al `Mininet` geïnstalleerd, maar we gaan deze uitbreiden met o.a. een GUI, web browser en intallatie van de `ONOS` controller.
 
 Wanneer je de VM hebt geïmporteerd in VirtualBox, start deze dan nog niet op, maar ga naar de instellingen van de VM.
