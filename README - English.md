@@ -142,7 +142,7 @@ When you want all information about your created network, use `dump`:
 
 ![dump mininet](/images/dump.png)
 
-&nsbp;
+&nbsp;
 #### Initiating Traffic
 
 When trying `h1 ping h2`, you come to the conclusion that traffic isn't working.
