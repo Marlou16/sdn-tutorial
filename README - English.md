@@ -77,7 +77,7 @@ cd ..
 If correct, you are now ready to go!
 Also, keep in mind that you can also use this VM to play some more after this tutorial.
 
-For the tutorial you need the files _triange.py_ and _onos-app-ifwd-1.9.0-SNAPSHOT.oar_, which you can download from this GitHub repository.
+For the tutorial you need the files _triangle.py_ and _onos-app-ifwd-1.9.0-SNAPSHOT.oar_, which you can download from this GitHub repository.
 However you get the files (for example in a `.zip` downloading from the site), eventually you need the files in the home-folder (which is, again, `/home/mininet`).
 
 &nbsp;
