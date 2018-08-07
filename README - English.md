@@ -39,7 +39,7 @@ Then, in the terminal, execute the following commands:
 
 install the GUI and VM Guest Additions (for better resolution):
 ```
-sudp apt-get update
+sudo apt-get update
 sudo apt-get install xinit lxterminal lxde-common lxsession openbox
 sudo apt-get install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
 ```
