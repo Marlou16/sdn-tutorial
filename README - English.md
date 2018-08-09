@@ -212,8 +212,12 @@ _Stop Mininet. It is OK if ONOS is still running._
 
 Wireshark is a so-called packet-sniffer, and can we use to investigate the actual OpenFlow traffic.
 You can start `Wireshark` easily using a seperate terminal and performing the command `sudo wireshark &`.
-_Disregard any messages that pop up._
+_Disregard any messages that pop up (just press OK)._
 A GUI will open, and you can start a 'capture' on the `looback:lo` interface.
+You can do this in this block in the GUI:
+
+![wireshark](/images/wireshark.png)
+
 You will enter a new screen where the packets you sniff appear.
 Because we are (solely) interested in `OpenFlow` traffic, I recommend the following 'filter':
 ```
