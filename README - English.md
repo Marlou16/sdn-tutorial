@@ -1,7 +1,7 @@
 # Introduction to SDN
 
 Welcome to this tutorial where you will get to know Software Defined Networking.
-Following this tutorial you will able to setup your own virtual environment and create a virtual network using `mininet` which is controlled by the `ONOS` SDN controller.
+Here, you will able to setup your own virtual environment and create a virtual network using `mininet` which is controlled by the `ONOS` SDN controller.
 One can install a specific application on this controller which creates connectivity using `Intents`.
 We will also spend some time on putting everything in the right context.
 
@@ -18,17 +18,17 @@ If you are not familiar with these things, don't be afraid to aks your friend th
 1. [Preparation](#voorbereiding)
 2. [Discover ONOS](#onos)
 3. [Creating your network with Mininet](#mininet)
-4. [SDN in detail: App Limitations](#sdn-1)
-5. [The OpenFlow protocol in Wireshark](#wireshark)
+4. [The OpenFlow Protocol](#sdn-1)
+5. [Looking at OpenFlow using Wireshark](#wireshark)
 6. [Putting things in Context](#context)
-7. [SDN in detail: Intent Based Forwarding](#sdn-2)
+7. [Next-level SDN: Intent Based Forwarding](#sdn-2)
 
 &nbsp;
 ## Preparation <a name="voorbereiding"></a>
 Before we can start, we need to setup our virtual environment.
 For this, we are going to install a Virtual Machine which runs in VirtualBox.
 VirtualBox you can download [here](https://www.virtualbox.org/wiki/Downloads), and the VM which we are going to extend you can download [here](https://github.com/mininet/mininet/wiki/Mininet-VM-Images).
-This VM has already `Mininet` installed, but we are going to extend it giving it a GUI, web browser and an installation of the `ONOS` controller.
+This VM has already `Mininet` installed, we are going to extend it giving it a GUI, web browser and an installation of the `ONOS` controller.
 
 When you have imported the VM into VirtualBox, don't start this yet, but go to the VM settings.
 Here, in the submenu for 'System', set the memory on (at least) 2048MB.
@@ -44,8 +44,12 @@ sudo apt-get install xinit lxterminal lxde-common lxsession openbox
 sudo apt-get install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
 ```
 
+__After this step, you can use the command `startx` to open the GUI.
+Then, you can open a seperate terminal using the combination `Ctrl+Alt+T`.__
+
 We need `java(8)`:
 ```
+!! During the installation, accept the license agreement (type yes)
 sudo apt-get install python-software-properties software-properties-common
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
@@ -56,12 +60,11 @@ install additional software: `Wireshark`, web browser and text-editor:
 ```
 sudo apt-get install chromium-browser
 sudo apt-get install gedit
+!! When installing Wireshark, allow non-root users to capture packets
 sudo apt-get install Wireshark
 ```
 
-For the next step you need the GUI of the VM (the GUI you just installed).
-__On the VM, you open the GUI using the command `startx`.
-Then, you can open a seperate terminal using the combination `Ctrl+Alt+T`__
+Before getting __ONOS__, make sure you have started the GUI and started a terminal.
 If correct, you should be in the so-called 'home-folder' `/home/mininet`.
 You can check where you are at any moment using the command `pwd`.
 
@@ -97,8 +100,6 @@ __tip__: 'auto-complete' a folder-name using the TAB button.
 If correct, a Command Line Interface (CLI) of the controller will start (_be patient_).
 ONOS uses for this the tool `KARAF` - but we will not look into this tool in detail.
 
-![onos cli](/images/onos-apps.png)
-
 From the CLI you can manage the controller by performing different commands.
 Using commands you can for example activate different applications, and you need these applications to indeed let the controller be of any use.
 ONOS has a bunch of applications, of which we will activate some:
@@ -108,12 +109,14 @@ app activate org.onosproject.drivers
 apps -s -a
 ```
 
-If correct, when performing the last command, you will get the same list of apps as in the picture above.
+If correct, when performing the last command, you will get the same list of apps as in the picture below.
 If not, you should activate the missing apps seperately, because you will need them.
+
+![onos cli](/images/onos-apps.png)
 
 __Extra__: _Using the command `apps -s -a` the option `-s` lets you show a summary result and the `-a` means you are only interested in the activated apps. Using `apps --help`, you will get a list of all options for the `apps` command. In the ONOS CLI you can use `--help` after every command if you want to know some more._
 
-You can shut down ONOS using `logout`.
+Should it be necessary, you can shut down ONOS using `logout` (but you should _not_ do this now).
 
 &nbsp;
 ## Your own network using Mininet <a name="mininet"></a>
@@ -124,7 +127,7 @@ An `Open vSwitch` is a typical SDN-switch: a 'stupid' switch which needs a contr
 
 *Open a new terminal (or tab)*. You can start Mininet using the following command:
 ```
-sudo mn --topo tree,2,3 --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
+sudo mn --topo tree,2,3 --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13 --mac
 ```
 
 In short, this command does:
@@ -137,48 +140,53 @@ As an example, the host with IP 10.0.0.1 gets the MAC  address 00:00:00:00:00:01
 
 ![tree mininet](/images/mininet-start.png)
 
-Via Mininet you also get a seperate CLI where you can execute different commands which steer the network, such as `h1 ping h2` or `xterm h1` (which opens a terminal for host 1) or `exit`.
+Via Mininet you also get a seperate CLI where you can execute different commands which steer the
+network, such as `h1 ping h2` or `xterm h1` (which opens a terminal for host 1) or `exit`.
+When you want all information regarding the connections (links) you can get with the command `links`.
 When you want all information about your created network, use `dump`:
 
 ![dump mininet](/images/dump.png)
 
-&nsbp;
+&nbsp;
 #### Initiating Traffic
-
 When trying `h1 ping h2`, you come to the conclusion that traffic isn't working.
 This is because the required functionality is not installed on the controller!
 Go to the controller CLI and activate the `org.onosproject.fwd` app.
 Try initiating traffic again using Mininet and *voilá*!
 
 &nbsp;
-## SDN in detail: App Limitations <a name="sdn-1"></a>
-__Important__: _From this moment you'll need the extra files on your VM (in the home-folder)_
-
-Let's look at how SDN works in detail.
-We will do this by jumping right in - after this, you can experiment some yourself.
-We are also going to use the ONOS GUI.
-First, make sure that ONOS is running in a terminal and check whether the basic apps are activated.
-Then, from the home-folder, start an ew terminal where we will start a new Mininet (if the other one is still running, exit it) using a custom topology:
-```
-sudo mn --mac --topo mytopo --custom triangle.py --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
-```
-__Extra__: _`triangle.py` defines a network with three switches which each connect a host. Curious how this works? Open the file using a text-editor (bv `gedit triangle.py`). You can also create your own script defining your own topology._
-
+#### The ONOS GUI
+Using the ONOS controller, it is possible to look into the network topology using a GUI.
 You can find the ONOS GUI in a web browser using the URL `http://localhost:8181/onos/ui/login.html`, logging in with `onos/rocks`.
-Then, you should see something like this:
-![onos gui](/images/topo-1.png)
+Then, with this network, you should see something like this:
+
+![onos gui 1](/images/gui.png)
 
 Take the time to experiment some in the browser.
 You can click on the links between the switches (or hosts when they appear) and investigate port numbers, for example.
 Use the `/` button to get the menu with possibilities for options.
 For example, make sure you use `H` to setup the `Host Visibility`.
 
-If you have not done yet, activate the `org.onosproject.fwd` on the controller and perform a `pingall` in Mininet.
-While waiting, __focus on the GUI__.
-While the pings will not be successful, you will see the hosts appearing in the topology.
+&nbsp;
+## The OpenFlow Protocol <a name="sdn-1"></a>
+Now we have started our first network and seen that it works, you should be curious hów it works!
+As we have seen in the Powerpoint presentation, ONOS uses the OpenFlow protocol to install flow rules on the Open vSwitches.
+Up to now, we have not looked into this.
+First we will look investigate flow tables, and after that we will investigate OpenFlow packages!
 
-__Excuse me? Why won't the pings work?!__
+##### A simpler topology
+For this purpose, we are going to work with a simpler topology.
+To start fresh, quit both the controller (`logout`) and Mininet (`exit`).
+Also, in the terminal you are going to start Mininet, perform the command `sudo mn -c`.
 
+You can start ONOS in the terminal it was running before by pressing 'up', which gives you the last used commands.
+
+You can start Mininet with the following command:
+```
+sudo mn --mac --topo single,4 --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
+```
+
+##### Flow tables
 As said, the switches are 'simple' devices which can only check their so-called flow-table.
 Using the Mininet CLI you can ask for the content of these table, using the command:
 ```
@@ -186,46 +194,35 @@ sh ovs-ofctl -O OpenFlow13 dump-flows s1
 ```
 ![flows](/images/flows.png)
 
-In the ONOS CLI, commands like `devices`, `hosts` en `flows` are interesting. Try!
+In the ONOS CLI, commands like `devices`, `hosts` en `flows` are interesting. __Try!__
 
 As you can see in the image, a part of the second line states  `priority=4000, arp, actions=CONTROLLER:66535`.
-In short, this line (flow rule) states that when the switch recieves a ARP-pakket, he should send it through to the controller to make a decision what to do.
+In short, this line (flow rule) states that when the switch recieves a ARP packet, he should send it through to the controller to make a decision what to do.
 Then, the controller will try to figure out what is best to do to discover the topology - this is implemented in the `org.onosproject.fwd` app.
-In topologies without closed loops, this app works perfectly and as a result the controller will install new flow rules in the table to send packets through.
-However, in this case, the controller can't make a decision, such that no new rules are installed.
+In simple topologies such as those we are working with, this app works fine and as a result the controller will install new flow rules in the table to send packets through.
 
-&nbsp;
-#### Try it yourself!
-Use the commands and experience from the previous part to see what happens when you start Mininet with as simpler topology, such as one with only one switch with some hosts connected.
-To start fresh, quit both the controller (`logout`) and Mininet (`exit`).
-Also, in the terminal you are going to start Mininet, perform the command `sudo mn -c`.
+As an example, try a ping between two hosts with `h1 ping h2 -c5`.
+When this ping is finished, perform again the command shown above to get the flow table.
+This time, you will see new flow rules, which are very specific!
+You can try pings between other hosts to see how the resulting flows differ.
 
-Then, start Mininet with the following command:
-```
-sudo mn --mac --topo single,4 --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
-```
 
-Check whether the forwarding app is still activated (we expect it is) and perform a `pingall`, or specifiek `h2 ping h3` (better).
-Then, use commands from above to see what the result is in the flow table and in traffic response.
+## Looking at OpenFlow using Wireshark
+_Stop Mininet. It is OK if ONOS is still running._
 
-&nbsp;
-## Wireshark: The OpenFlow Protocol <a name="wireshark"></a>
-ONOS uses the OpenFlow protocol to install flow rull on the Open vSwitches, but up to now, we have not looked into this.
-We can investigate this traffic with the packet-sniffer `Wireshark`.
-
-To start easy, I recommend stopping Mininet. It is OK if ONOS is still running.
-
+Wireshark is a so-called packet-sniffer, and can we use to investigate the actual OpenFlow traffic.
 You can start `Wireshark` easily using a seperate terminal and performing the command `sudo wireshark &`.
+_Disregard any messages that pop up._
 A GUI will open, and you can start a 'capture' on the `looback:lo` interface.
 You will enter a new screen where the packets you sniff appear.
 Because we are (solely) interested in `OpenFlow` traffic, I recommend the following 'filter':
 ```
 openflow_v4 and openflow_v4.type != ofpt_multipart_request and openflow_v4.type != ofpt_multipart_reply
 ```
-_I choose this filter because, when the controller and switches are connected, a lot of OpenFlow traffic will be initiated by the controller to keep up to date about the status of the switches. For now, this is not interesting. If you are interesting, change the filter to only `openflow_v4`._
+_I choose this filter because, when the controller and switches are connected, a lot of OpenFlow traffic will be initiated by the controller to stay up to date about the status of the switches. For now, this is not interesting. If you are interested, change the filter to only_ `openflow_v4`.
 
 Start Mininet (topology doesn't matter).
-In Wireshark now differnt OpenFlow packets come by, in the order they are sent.
+In Wireshark now different OpenFlow packets come by, in the order they are sent.
 Of most interest are the `HELLO`, `FEATURE_REQUEST` and `FEATURE_REPLY` (and later `FLOW_MOD`).
 The first three packet types are part of the so-called OpenFlow 'handshake', where the controller and switch setup their connection.
 The `FLOW_MOD` always comes from the controller, which installs a flow rule on the switch.
@@ -256,26 +253,38 @@ Soling conflicts between different applications is called 'conflict resolution'.
 
 _Last but not least_, all applications are writting in software languages - this is what makes it really software-defined networking!
 
-&nbsp;
-## SDN in detail: Intent Based Forwarding <a name="sdn-2"></a>
-In the previous part we saw that the first forwarding app had its limitations.
-Now, we are going to focus on a better application.
-This one works with _Intents_.
-Intents can be seen as policy rules which specify certain demands.
-The controller then calculates what to do to implement traffic which follow these demands.
 
-To be sure, clean Mininet by exiting it (`exit`) and perform a `sudo mn -c`.
-Also, clean the controller by performing in its CLI:
+&nbsp;
+## Next-level SDN: Intent Based Forwarding <a name="sdn-2"></a>
+__Important__: _From this moment you'll need the extra files on your VM (in the home-folder).
+Before continuing, exit Mininet and perform a clean-up with `sudo mn -c`.
+It is OK if ONOS is still running._
+
+The Reactive L2 Forwarding app we have investigated has some limitations.
+One is that Flow Rules don't stay installed long in the flow tables.
+Also, in some more complicated topologies, flow rules aren't installed at all because the controller can't cope with the calculations.
+
+To see what ONOS can do more, we are going to work with a new application.
+For this, firstly deactivate the forwarding application in the ONOS CLI:
 ```
 app deactivate org.onosproject.fwd
 wipe-out please
 ```
-_Don't forget to say_ __please__ _otherwise it won't listen!_
+_Don't forget to say **please** otherwise it won't listen!_
 
-Start Minient with the `triangle.py` topology as is done before.
-When the controller and Mininet are all set, go to the ONOS GUI and find in the menu the 'Applications' screen.
-Here, we can add the `.oar` file which you have downloaded (see picture below).
+And, we start with a more complicated, custom-made Mininet topology:
+```
+sudo mn --mac --topo mytopo --custom triangle.py --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
+```
+__Extra__: _`triangle.py` defines a network with three switches which each connect a host. Curious how this works? Open the file using a text-editor (bv `gedit triangle.py`). You can also create your own script defining your own topology._
+
+In the ONOS GUI, the topology will look like this:
+![onos gui](/images/topo-1.png)
+
+In the ONOS GUI, go find in the menu the 'Applications' screen.
+Here, we can add the `.oar` file which you have downloaded.
 `OAR` stands for 'ONOS Application aRchive'; in the context of software-defined networking, you can add every self-written application in such a file-format to the controller.
+You use the '+' to upload the app, and then press play!
 
 ![onos app toevoegen](/images/onos-applications.png)
 
@@ -284,8 +293,11 @@ __Extra__: _In the ONOS CLI, perform `apps -s -a` uit to perform a check up._
 In Mininet, now try a `pingall`. Be patient, because the controller has to do some calculations.
 But, if correct, when performing the command for a second time, you will have a working network!
 
-_So, what happened?_
-To understand what happened, in Mininet, investigate the switch flow table using:
+_**So, what happened?**_
+Our new applications works with so-called _Intents_.
+Intents can be seen as policy rules which specify certain demands.
+The controller then calculates what to do to implement traffic which follow these demands.
+To understand what exactly happened, in Mininet, investigate the switch flow table using:
 ```
 sh ovs-ofctl -O OpenFlow13 dump-flows s1
 ```
@@ -310,15 +322,14 @@ You as a person, don't have to think about how the traffic needs to go - this ca
 This functionality is all implemented in the `ifwd` application.
 
 &nbsp;
----
-#### Experimenteer met Dynamische netwerken
+#### Experiment with Dynamic Networks
 The controller checks on the Intents and the status of the network any moment.
 Would you remove an Intent for traffic between Host 1 and Host 2, using the following command:
 ```
-remove-intent org.onosproject.ifw 00:00:00:00:00:01/None00:00:00:00:00:02/None
+remove-intent org.onosproject.ifwd 00:00:00:00:00:01/None00:00:00:00:00:02/None
 ```
 the result would be that the controller removes the flow rules which below to this Intent.
-You can see this in the flow tables of the involves switches:
+You can see this in the flow tables of the involved switches:
 ![removal of intents](/images/remove-intents.png)
 
 You can get the removed Intent back in two ways.
@@ -342,6 +353,10 @@ You can look what happens in the flow tables and topology when you disable a lin
 link s2 s3 down         ! use 'up' instead of 'down' to restore the link
 ```
 
+As you will see, even when the link is down, communication is still possible, but takes another route.
+When the link is up again (by performing the `up` version of the command), you will see that the traffic still takes the alternative route.
+_Can you explain why?_
+
 &nbsp;
 #### Try it all! Multiple routes in the network ####
 We end with a more complicated task.
@@ -355,4 +370,4 @@ Don't forget your friend the `--help` option.
 You can also perform a packet capture with Wireshark while adding these Intents to see what happens on OpenFlow level.
 Just try some stuff! :)
 
-Too difficult? The solution you see [here](https://www.youtube.com/watch?v=glkJaBvtqpA).
+Too much? The solution you see [here](https://www.youtube.com/watch?v=glkJaBvtqpA).
