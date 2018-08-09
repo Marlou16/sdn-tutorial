@@ -14,7 +14,7 @@ If you are not familiar with these things, don't be afraid to aks your friend th
 
 ![banner image](/images/tutorial-banner.png)
 
-## Inhoudsopgave
+## Contents
 1. [Preparation](#voorbereiding)
 2. [Discover ONOS](#onos)
 3. [Creating your network with Mininet](#mininet)
@@ -39,7 +39,7 @@ Then, in the terminal, execute the following commands:
 
 install the GUI and VM Guest Additions (for better resolution):
 ```
-sudp apt-get update
+sudo apt-get update
 sudo apt-get install xinit lxterminal lxde-common lxsession openbox
 sudo apt-get install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
 ```
@@ -53,7 +53,7 @@ We need `java(8)`:
 sudo apt-get install python-software-properties software-properties-common
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracel-java8-installer oracle-java8-set-default
+sudo apt-get install oracle-java8-installer oracle-java8-set-default
 ```
 
 install additional software: `Wireshark`, web browser and text-editor:
@@ -72,7 +72,7 @@ To get __ONOS__, at the VM visit [this site](https://wiki.onosproject.org/displa
 Then:
 ```
 cd Downloads
-tar -zxvf onos-1.10.4-tar.gz
+tar -zxvf onos-1.10.4.tar.gz
 mv onos-1.10.4 ~/
 cd ..
 ```
@@ -80,7 +80,7 @@ cd ..
 If correct, you are now ready to go!
 Also, keep in mind that you can also use this VM to play some more after this tutorial.
 
-For the tutorial you need the files _triange.py_ and _onos-app-ifwd-1.9.0-SNAPSHOT.oar_, which you can download from this GitHub repository.
+For the tutorial you need the files _triangle.py_ and _onos-app-ifwd-1.9.0-SNAPSHOT.oar_, which you can download from this GitHub repository.
 However you get the files (for example in a `.zip` downloading from the site), eventually you need the files in the home-folder (which is, again, `/home/mininet`).
 
 &nbsp;

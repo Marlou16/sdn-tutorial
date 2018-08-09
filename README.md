@@ -29,7 +29,7 @@ Wees gedurende de tutorial vooral niet bang om random dingen te proberen en op t
 ## Voorbereiding <a name="voorbereiding"></a>
 Voordat we kunnen beginnen moeten we de virtuele omgeving opzetten.
 We gaan onze eigen Virtuele Machine inrichting die draait in VirtualBox.
-VirtualBox kun je [hier](https://www.virtualbox.org/wiki/Downloads) downloaden, de VM die we gaan uitbreiden kan je [hier]((https://github.com/mininet/mininet/wiki/Mininet-VM-Images)) downloaden.
+VirtualBox kun je [hier](https://www.virtualbox.org/wiki/Downloads) downloaden, de VM die we gaan uitbreiden kan je [hier](https://github.com/mininet/mininet/wiki/Mininet-VM-Images) downloaden.
 Op deze VM staat al `Mininet` geïnstalleerd, maar we gaan deze uitbreiden met o.a. een GUI, web browser en intallatie van de `ONOS` controller.
 
 Wanneer je de VM hebt geïmporteerd in VirtualBox, start deze dan nog niet op, maar ga naar de instellingen van de VM.
@@ -43,7 +43,7 @@ __let op: zorg dat je NIET op een/het bedrijfsnetwerk zit__
 
 installeer de GUI en VM Guest Additions (voor een betere resolutie):
 ```
-sudp apt-get update
+sudo apt-get update
 sudo apt-get install xinit lxterminal lxde-common lxsession openbox
 sudo apt-get install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
 ```
@@ -53,7 +53,7 @@ We hebben `java(8)` nodig:
 sudo apt-get install python-software-properties software-properties-common
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracel-java8-installer oracle-java8-set-default
+sudo apt-get install oracle-java8-installer oracle-java8-set-default
 ```
 
 installeer additional software: `Wireshark`, een browser en text-editor.
@@ -72,7 +72,7 @@ Dit kan je controleren met het commando `pwd`.
 Voor __ONOS__, ga op de VM naar [deze site](https://wiki.onosproject.org/display/ONOS/Downloads) (op de VM!) en download eerst 1.10.4 versie in `tar.gz` formaat. Doe vervolgens:
 ```
 cd Downloads
-tar -zxvf onos-1.10.4-tar.gz
+tar -zxvf onos-1.10.4.tar.gz
 mv onos-1.10.4 ~/
 cd ..
 ```
