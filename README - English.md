@@ -49,10 +49,10 @@ Then, you can open a seperate terminal using the combination `Ctrl+Alt+T`.__
 
 We need `java(8)`:
 ```
-!! During the installation, accept the license agreement (type yes)
 sudo apt-get install python-software-properties software-properties-common
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
+!! During the installation, accept the license agreement (type yes)
 sudo apt-get install oracle-java8-installer oracle-java8-set-default
 ```
 
@@ -174,7 +174,7 @@ As we have seen in the Powerpoint presentation, ONOS uses the OpenFlow protocol 
 Up to now, we have not looked into this.
 First we will look investigate flow tables, and after that we will investigate OpenFlow packages!
 
-##### A simpler topology
+#### A simpler topology
 For this purpose, we are going to work with a simpler topology.
 To start fresh, quit both the controller (`logout`) and Mininet (`exit`).
 Also, in the terminal you are going to start Mininet, perform the command `sudo mn -c`.
@@ -186,7 +186,7 @@ You can start Mininet with the following command:
 sudo mn --mac --topo single,4 --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
 ```
 
-##### Flow tables
+#### Flow tables
 As said, the switches are 'simple' devices which can only check their so-called flow-table.
 Using the Mininet CLI you can ask for the content of these table, using the command:
 ```
@@ -323,7 +323,6 @@ add-host-intent --help
 
 The result of the command is a long list of options.
 You as a person, don't have to think about how the traffic needs to go - this calculation and translation will be performed by the controller.
-This functionality is all implemented in the `ifwd` application.
 
 &nbsp;
 #### Experiment with Dynamic Networks
