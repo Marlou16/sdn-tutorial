@@ -283,7 +283,7 @@ Daarnaast, in wat ingewikkeldere topologieën klopt de berekening van de control
 Om te kijken wat ONOS nog meer kan, gaan we een nieuwe applicatie bekijken.
 Hiervoor deactiveren we eerst de huidige functionaliteit:
 ```
-app deactivate org.onosproject.ifwd
+app deactivate org.onosproject.fwd
 wipe-out please
 ```
 _Vergeet geen_ __please__ _te zeggen bij de wipe-out. Anders luistert de controller niet!_
