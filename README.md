@@ -1,6 +1,6 @@
 # Introductie van SDN
 
-Welkom bij deze tutorial waar je kennis zult maken met Software Defined Networking.
+Welkom bij deze tutorial waar je kennis zult maken met Software Defined Networking. Hoera!
 Na het volgen van deze tutorial heb je je eigen virtuele omgeving opgezet en zou je in staat moeten zijn om met `Mininet` een gevirtualiseerd netwerk op te zetten dat aangestuurd wordt door de `ONOS` (SDN) controller.
 Op deze controller kan je een specifieke applicatie installeren die door middel van `Intents` het verkeer door het netwerk stuurt.
 Ook zal deze tutorial alles in de juiste context te plaatsen.
