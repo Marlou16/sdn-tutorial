@@ -1,0 +1,18 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "peru/ubuntu-18.04-desktop-amd64"
+  config.vm.box_version = "20190312.01"
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "KPN SDN Tutorial"
+    vb.gui = true
+    vb.memory = 2048
+  end
+
+  config.vm.hostname = "sdn-box"
+  config.vm.provision "file", source: "onos-1.10.4.tar.gz", destination: "/home/vagrant/onos-1.10.4.tar.gz"
+  config.vm.provision "file", source: "triangle.py", destination: "/home/vagrant/triangle.py"
+  config.vm.provision "file", source: "onos-app-ifwd-1.9.0-SNAPSHOT.oar", destination: "/home/vagrant/onos-app-ifwd-1.9.0-SNAPSHOT.oar"
+  config.vm.provision "shell", path: "setup-workshop-vm.sh"
+
+  config.vm.provision "shell", inline: "sudo reboot"
+
+end
