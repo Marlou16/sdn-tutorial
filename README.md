@@ -28,67 +28,27 @@ Wees gedurende de tutorial vooral niet bang om random dingen te proberen en op t
 
 &nbsp;
 ## Voorbereiding <a name="voorbereiding"></a>
-_Voordat we kunnen beginnen moeten we onze virtuele omgeving opzetten.
-Hieronder staat uitgelegd hoe je eigen VM kunt downloaden en uitbreiden. Een goed eerste punt om te kijken wat het allemaal inhoudt.
-Mocht de voorbereiding niet lukken, dan zijn er tijdens de workshop USB sticks beschikbaar om je de VM te geven. Zorg wel dat je VirtualBox hebt gedownload!_
+Voordat we kunnen beginnen moeten we onze virtuele omgeving opzetten.
+Dit doen we met de bestanden beschikbaar in de `vm` folder en de tool `Vagrant`, die de virtuele omgeving installeert en configureert. De VM is vervolgens te gebruiken met `VirtualBox`:
+* Installeer [Vagrant](https://www.vagrantup.com/downloads.html) en [VirtualBox](https://www.virtualbox.org/wiki/Downloads),
+* Installeer [Git](https://git-scm.com/downloads),
+* Ga in de Explorer naar een gewenste locatie en open `Git Bash` door dit te kiezen als je op de rechtermuisknop drukt,
+* In `Git Bash`, voer de volgende commando's uit:
+    * `git clone https://github.com/Marlou16/sdn-tutorial`
+    * `cd vm`
+    * `vagrant up`
 
-We gaan onze eigen Virtuele Machine inrichting die draait in VirtualBox.
-VirtualBox kun je [hier](https://www.virtualbox.org/wiki/Downloads) downloaden, de VM die we gaan uitbreiden kan je [hier](https://github.com/mininet/mininet/wiki/Mininet-VM-Images) downloaden.
-Op deze VM staat al `Mininet` geïnstalleerd, maar we gaan deze uitbreiden met o.a. een GUI, web browser en intallatie van de `ONOS` controller.
+Tijdens de installatie wordt de VM al opgestart en zie je allerlei logging in je bash voorbijkomen.
+Na de installatie is de VM klaar voor gebruik en kan je inloggen met `kpn/kpn`.
 
-__let op: Wanneer je met de VM gaat werken, zorg dat je NIET op een/het bedrijfsnetwerk zit__
+Belangrijk in de virtuele omgeving is de toestcombinatie `Ctrl+Alt+T`.
+Hiermee open je een **terminal**.
+Als je de eerste keer de VM gaat gebruiken, open een terminal en voer commando `./menu_favorites.sh` uit.
+Hiermee maak je een aantal desktop icons direct beschikbaar, handig!
 
-Wanneer je de VM hebt geïmporteerd in VirtualBox, start deze dan nog niet op, maar ga naar de instellingen van de VM.
-In het sub-menu voor 'Systeem', zet het geheugen op 2048MB.
-Controleer in het sub-menu 'Netwerk' of Adapter 1 aan staat en op NAT ingesteld staat.
-Wanneer je de VM opstart, kom je in een terminal terecht. De VM heeft nog niets anders.
-De inloggegevens zijn `mininet/mininet`.
-Vervolgens, in de terminal, voer je de volgende stappen uit:
 
-installeer de GUI en VM Guest Additions (voor een betere resolutie):
-```
-sudo apt-get update
-sudo apt-get install xinit lxterminal lxde-common lxsession openbox
-sudo apt-get install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
-```
-
-__Na deze stap kan je de GUI van de VM gebruiken. Je opent deze met het commando `startx`.
-Vervolgens kan je een terminal openen met de sneltoets `Ctrl+Alt+T`__
-
-We hebben `java(8)` nodig:
-```
-sudo apt-get install python-software-properties software-properties-common
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-!! Tijdens de installatie van Java, accepteer de license agreement (type 'yes')
-sudo apt-get install oracle-java8-installer oracle-java8-set-default
-```
-
-installeer additional software: `Wireshark`, een browser en text-editor.
-```
-sudo apt-get install chromium-browser
-sudo apt-get install gedit
-!! Tijdens de Wireshark installatie, antwoord zo dat 'non-root users' ook captures kunnen uitvoeren
-sudo apt-get install Wireshark
-```
-
-Voor de volgende stap heb je echt de GUI van de VM nodig, als je deze nog niet gestart had.
-Als het goed is ben je op dit moment in een terminal in de zogenaamde 'home-folder' `/home/mininet/`.
-Dit kan je controleren met het commando `pwd`.
-
-Voor __ONOS__, ga op de VM naar [deze site](https://wiki.onosproject.org/display/ONOS/Downloads) en download eerst 1.10.4 versie in `tar.gz` formaat. Doe vervolgens in de terminal:
-```
-cd Downloads
-tar -zxvf onos-1.10.4.tar.gz
-mv onos-1.10.4 ~/
-cd ..
-```
-
-Als alles goed is gegaan dan ben je er klaar voor.
-Daarnaast is deze VM ook nog uitermate geschikt om ná deze tutorial nog verder mee te spelen.
-
-Voor de tutorial heb je ook nog de bestanden _triangle.py_ en _onos-app-ifwd-1.9.0-SNAPSHOT.oar_ nodig, welke op deze GitHub pagina te downloaden zijn.
-Uiteindelijk moeten deze bestanden in je home-folder terecht komen (`/home/mininet`).
+Voor de tutorial heb je ook nog de bestanden _triangle.py_ en _onos-app-ifwd-1.9.0-SNAPSHOT.oar_ nodig.
+Het eerste bestand kan je vinden op de locatie `/home/kpn/mininet-topos`, het tweede bestand staat in je home-folderr (`/home/kpn/`).
 
 &nbsp;
 ## Ontdek ONOS (Open Network Operating System) <a name="onos"></a>
@@ -206,7 +166,9 @@ sh ovs-ofctl -O OpenFlow13 dump-flows s1
 ```
 ![flows](/images/flows.png)
 
-In de ONOS CLI zijn commando's als `devices`, `hosts` en `flows` interessant. __Probeer maar.__
+In de ONOS CLI zijn commando's als `devices`, `hosts` en `flows` interessant.
+__Probeer maar.__
+Gebruik de optie `-s` om de output behapbaar te maken.
 
 Zoals je in het plaatje kun zien, zegt een deel van de tweede regel `priority=4000, arp, actions=CONTROLLER:66535`.
 Kortweg, houdt deze regel in dat als de switch een ARP-pakket tegenkomt, hij het gehele pakket moet doorsturen naar de controller, zodat die een beslissing kan nemen.

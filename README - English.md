@@ -26,62 +26,25 @@ If you are not familiar with these things, don't be afraid to aks your friend th
 &nbsp;
 ## Preparation <a name="voorbereiding"></a>
 Before we can start, we need to setup our virtual environment.
-For this, we are going to install a Virtual Machine which runs in VirtualBox.
-VirtualBox you can download [here](https://www.virtualbox.org/wiki/Downloads), and the VM which we are going to extend you can download [here](https://github.com/mininet/mininet/wiki/Mininet-VM-Images).
-This VM has already `Mininet` installed, we are going to extend it giving it a GUI, web browser and an installation of the `ONOS` controller.
+For this, you can use the files available in the `vm` folder and the tool `Vagrant`, which will spin up the virtual machine and configure it.
+The VM can be used via `VirtualBox`:
+* Install [Vagrant](https://www.vagrantup.com/downloads.html) en [VirtualBox](https://www.virtualbox.org/wiki/Downloads),
+* Install [Git](https://git-scm.com/downloads),
+* Find a preferred spot in your Explorer and open `Git Bash` using the right mouse button,
+* In `Git Bash`, perform the following commands:
+    * `git clone https://github.com/Marlou16/sdn-tutorial`
+    * `cd vm`
+    * `vagrant up`
 
-When you have imported the VM into VirtualBox, don't start this yet, but go to the VM settings.
-Here, in the submenu for 'System', set the memory on (at least) 2048MB.
-In the submenu for the 'Network', check whether Adapter 1 is on and set on NAT.
-Then, when starting the VM, you will enter a terminal. This is all the VM has got.
-You can login using `mininet/mininet`.
-Then, in the terminal, execute the following commands:
+Using the installation, the VM will start and all kinds of logging will appear in your bash.
+After the installation you are ready to go and login with `kpn/kpn`.
 
-install the GUI and VM Guest Additions (for better resolution):
-```
-sudo apt-get update
-sudo apt-get install xinit lxterminal lxde-common lxsession openbox
-sudo apt-get install virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
-```
+Important in the VM is the combination `Ctrl+Alt+T`, which gives you a new **terminal**.
+The first time you use the VM, open a terminal using these keys and perform `./menu_favorites.sh`.
+This will give you some desktop icons of applications we are going to use.
 
-__After this step, you can use the command `startx` to open the GUI.
-Then, you can open a seperate terminal using the combination `Ctrl+Alt+T`.__
-
-We need `java(8)`:
-```
-sudo apt-get install python-software-properties software-properties-common
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-!! During the installation, accept the license agreement (type yes)
-sudo apt-get install oracle-java8-installer oracle-java8-set-default
-```
-
-install additional software: `Wireshark`, web browser and text-editor:
-```
-sudo apt-get install chromium-browser
-sudo apt-get install gedit
-!! When installing Wireshark, allow non-root users to capture packets
-sudo apt-get install Wireshark
-```
-
-Before getting __ONOS__, make sure you have started the GUI and started a terminal.
-If correct, you should be in the so-called 'home-folder' `/home/mininet`.
-You can check where you are at any moment using the command `pwd`.
-
-To get __ONOS__, at the VM visit [this site](https://wiki.onosproject.org/display/ONOS/Downloads) and download the 1.10.4 version in `tar.gz` format.
-Then:
-```
-cd Downloads
-tar -zxvf onos-1.10.4.tar.gz
-mv onos-1.10.4 ~/
-cd ..
-```
-
-If correct, you are now ready to go!
-Also, keep in mind that you can also use this VM to play some more after this tutorial.
-
-For the tutorial you need the files _triangle.py_ and _onos-app-ifwd-1.9.0-SNAPSHOT.oar_, which you can download from this GitHub repository.
-However you get the files (for example in a `.zip` downloading from the site), eventually you need the files in the home-folder (which is, again, `/home/mininet`).
+For the tutorial you need the files _triangle.py_ and _onos-app-ifwd-1.9.0-SNAPSHOT.oar_, available in the `vm` folder of this repository.
+On the VM, the first file can be find in the `/home/kpn/mininet-topos` folder, and the second in your home-folder `/home/kpn/`.
 
 &nbsp;
 ## Discover ONOS (Open Network Operating System) <a name="onos"></a>
