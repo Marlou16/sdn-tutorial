@@ -8,7 +8,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.hostname = "sdn-box"
-  config.vm.provision "file", source: "onos-1.10.4.tar.gz", destination: "/home/vagrant/onos-1.10.4.tar.gz"
   config.vm.provision "file", source: "triangle.py", destination: "/home/vagrant/triangle.py"
   config.vm.provision "file", source: "onos-app-ifwd-1.9.0-SNAPSHOT.oar", destination: "/home/vagrant/onos-app-ifwd-1.9.0-SNAPSHOT.oar"
   config.vm.provision "shell", path: "setup-workshop-vm.sh"

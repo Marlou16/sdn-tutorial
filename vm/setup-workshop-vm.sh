@@ -28,8 +28,8 @@ sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure wireshark-common
 sudo usermod -a -G wireshark kpn
 
 # retrieving ONOS, ready to use :)
-mv /home/vagrant/onos-1.10.4.tar.gz /home/kpn/onos-1.10.4.tar.gz
 cd /home/kpn/
+wget -O onos-1.10.4.tar.gz http://repo1.maven.org/maven2/org/onosproject/onos-releases/onos-1.10.4/onos-1.10.4.tar.gz
 tar -zxf onos-1.10.4.tar.gz
 sudo rm onos-1.10.4.tar.gz
 sudo chown -R kpn:kpn onos-1.10.4
