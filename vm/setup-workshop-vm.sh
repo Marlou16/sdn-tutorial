@@ -14,6 +14,7 @@ sudo apt-get install -y \
   atom \
   python \
   git \
+  xterm \
   software-properties-common \
 
 # install the correct Oracle Java, needed for ONOS
