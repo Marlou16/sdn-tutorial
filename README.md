@@ -48,7 +48,7 @@ Hiermee maak je een aantal desktop icons direct beschikbaar, handig!
 
 
 Voor de tutorial heb je ook nog de bestanden _triangle.py_ en _onos-app-ifwd-1.9.0-SNAPSHOT.oar_ nodig.
-Het eerste bestand kan je vinden op de locatie `/home/kpn/mininet-topos`, het tweede bestand staat in je home-folderr (`/home/kpn/`).
+Het eerste bestand kan je vinden op de locatie `/home/kpn/mininet-topos`, het tweede bestand staat in je home-folder (`/home/kpn/`).
 
 &nbsp;
 ## Ontdek ONOS (Open Network Operating System) <a name="onos"></a>
@@ -72,9 +72,9 @@ Hierdoor kan je bijvoorbeeld verschillende applicaties activeren.
 Om de controller ook daadwerkelijk nuttige dingen te laten doen, is dit nodig - ONOS heeft een collectie aan functionaliteiten in apps gegoten die je aan/uit kunt zetten.
 Voor de basis-applicaties, voer in de ONOS CLI de volgende commando's uit:
 ```
-app activate org.onosproject.openflow
-app activate org.onosproject.drivers
-apps -s -a
+onos> app activate org.onosproject.openflow
+onos> app activate org.onosproject.drivers
+onos> apps -s -a
 ```
 Als het goed is, wanneer je het laatste commando uitvoert, krijg je dezelfde lijst met geactiveerde applicaties te zien als op de afbeelding hieronder.
 Zo niet, dan kan/moet je ze even los activeren.
@@ -120,7 +120,7 @@ Wanneer je stiekem net `h1 ping h2` hebt gedaan (doe het anders nu), kwam je tot
 Dat komt doordat er nog geen goede functionaliteit op de controller voor is.
 Ga naar de CLI van de controller en activeer de `org.onosproject.fwd` app.
 ```
-app activate org.onosproject.fwd
+onos> app activate org.onosproject.fwd
 ```
 Initieer vervolgens een nieuwe ping tussen twee hosts via Mininet en *voilà*!
 
@@ -162,7 +162,7 @@ sudo mn --mac --topo single,4 --controller remote,ip=127.0.0.1,port=6633 --switc
 Zoals gezegd, de switches zijn 'domme' apparaten die alleen maar hun zogenaamde flow table kunnen raadplegen.
 Met Mininet kan je in de CLI de inhoud van de flow table opvragen, met het commando:
 ```
-sh ovs-ofctl -O OpenFlow13 dump-flows s1
+mininet> sh ovs-ofctl -O OpenFlow13 dump-flows s1
 ```
 ![flows](/images/flows.png)
 
@@ -245,14 +245,14 @@ Daarnaast, in wat ingewikkeldere topologieën klopt de berekening van de control
 Om te kijken wat ONOS nog meer kan, gaan we een nieuwe applicatie bekijken.
 Hiervoor deactiveren we eerst de huidige functionaliteit:
 ```
-app deactivate org.onosproject.fwd
-wipe-out please
+onos> app deactivate org.onosproject.fwd
+onos> wipe-out please
 ```
 _Vergeet geen_ __please__ _te zeggen bij de wipe-out. Anders luistert de controller niet!_
 
 Daarnaast starten we een ingewikkeldere, zelf gecreëerde Mininet topologie:
 ```
-sudo mn --mac --topo mytopo --custom triangle.py --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
+sudo mn --mac --topo mytopo --custom mininet-topos/triangle.py --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
 ```
 __Extra__: _`triangle.py` definieert een netwerk met drie switches in een driehoek met aan elke switch éen host. Benieuwd hoe? Open dan het bestand met een tekst-editor (bv. `gedit`). Je kunt ook zelf zo'n soort script schrijven en daarmee je eigen topologie definiëren._
 
@@ -278,11 +278,11 @@ Intents kunnen gezien worden als policy regels die wensen en eisen specificeren.
 De controller berekent vervolgens hoe het verkeer moet lopen om aan deze wensen en eisen te voldoen.
 Om te begrijpen wat er precies is gebeurd, bekijk in Mininet de flow table van een switch met:
 ```
-sh ovs-ofctl -O OpenFlow13 dump-flows s1
+mininet> sh ovs-ofctl -O OpenFlow13 dump-flows s1
 ```
 en voer in de ONOS CLI het volgende commando in:
 ```
-Intents
+onos> intents
 ```
 
 De uitkomst voor de Intent voor verkeer tussen Host 1 en Host 2 zie je hieronder:
@@ -293,7 +293,7 @@ De Intents (zoals je ze ziet in de ONOS CLI) zijn vertaald naar flow rules (die 
 Zoals je hierboven kan aflezen heeft deze Intent weinig 'constraints'; we willen verkeer tussen twee hosts en hebben geen verdere eisen.
 Maar Intents kunnen heel veel constraints met zich meegeven, zoals je kan zien als je in de ONOS CLI het volgende commando uitvoert:
 ```
-add-host-intent --help
+onos> add-host-intent --help
 ```
 
 De uitkomst is een hele lange lijst met opties die je kunt meegeven aan zelf gedefinieerde Intents.
@@ -305,7 +305,7 @@ En voor deze Intents hoef je helemaal niet na te denken over de route die het ve
 De controller houdt te allen tijde het netwerk en de eisen (ofwel Intents) in de gaten.
 Wanneer je een intent voor verkeer tussen Host 1 en Host 2 weg zou gooien met het commando:
 ```
-remove-intent org.onosproject.ifwd 00:00:00:00:00:01/None00:00:00:00:00:02/None
+onos> remove-intent org.onosproject.ifwd 00:00:00:00:00:01/None00:00:00:00:00:02/None
 ```
 Dan is het resultaat dat de controller de flow rules die bij deze Intent horen ook verwijderd.
 En dat kan je weer zien in de flow tables van de betrokken switches:
@@ -328,7 +328,7 @@ __Extra__: _Je kunt ook een switch aanklikken, waarna er getoond wordt hoeveel f
 Intents houden ook rekening met de status van het netwerk.
 Kijk maar eens in de flow tables en topologie wat er gebeurt als je een verbinding tussen twee switches (tijdelijk) uitzet in Mininet met het commando:
 ```
-link s2 s3 down         ! use 'up' instead of 'down' to restore the link
+mininet> link s2 s3 down         ! use 'up' instead of 'down' to restore the link
 ```
 Zoals je zult zien, is communicatie nog steeds mogelijk omdat het een andere route neemt.
 Wanneer de verbinding het weer doet (voer de `up` variant van het commando uit), dan zal je zien dat het verkeer nog steeds de alternative route neemt.

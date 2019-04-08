@@ -67,9 +67,9 @@ From the CLI you can manage the controller by performing different commands.
 Using commands you can for example activate different applications, and you need these applications to indeed let the controller be of any use.
 ONOS has a bunch of applications, of which we will activate some:
 ```
-app activate org.onosproject.openflow
-app activate org.onosproject.drivers
-apps -s -a
+onos> app activate org.onosproject.openflow
+onos> app activate org.onosproject.drivers
+onos> apps -s -a
 ```
 
 If correct, when performing the last command, you will get the same list of apps as in the picture below.
@@ -153,7 +153,7 @@ sudo mn --mac --topo single,4 --controller remote,ip=127.0.0.1,port=6633 --switc
 As said, the switches are 'simple' devices which can only check their so-called flow-table.
 Using the Mininet CLI you can ask for the content of these table, using the command:
 ```
-sh ovs-ofctl -O OpenFlow13 dump-flows s1
+mininet> sh ovs-ofctl -O OpenFlow13 dump-flows s1
 ```
 ![flows](/images/flows.png)
 
@@ -234,14 +234,14 @@ Also, in some more complicated topologies, flow rules aren't installed at all be
 To see what ONOS can do more, we are going to work with a new application.
 For this, firstly deactivate the forwarding application in the ONOS CLI:
 ```
-app deactivate org.onosproject.fwd
-wipe-out please
+onos> app deactivate org.onosproject.fwd
+onos> wipe-out please
 ```
 _Don't forget to say **please** otherwise it won't listen!_
 
 And, we start with a more complicated, custom-made Mininet topology:
 ```
-sudo mn --mac --topo mytopo --custom triangle.py --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
+sudo mn --mac --topo mytopo --custom mininet-topos/triangle.py --controller remote,ip=127.0.0.1,port=6633 --switch ovsk,protocols=OpenFlow13
 ```
 __Extra__: _`triangle.py` defines a network with three switches which each connect a host. Curious how this works? Open the file using a text-editor (bv `gedit triangle.py`). You can also create your own script defining your own topology._
 
@@ -266,11 +266,11 @@ Intents can be seen as policy rules which specify certain demands.
 The controller then calculates what to do to implement traffic which follow these demands.
 To understand what exactly happened, in Mininet, investigate the switch flow table using:
 ```
-sh ovs-ofctl -O OpenFlow13 dump-flows s1
+mininet> sh ovs-ofctl -O OpenFlow13 dump-flows s1
 ```
 and in the ONOS CLI perform:
 ```
-Intents
+onos> intents
 ```
 
 The result of the second command for traffic between Host 1 and Host 2 you see below:
@@ -281,7 +281,7 @@ The Intents as seen in the ONOS CLI are translated into flow rules you can see i
 As you can see, the Intent has a few 'constraints'; we just want traffic between two host, no further demands.
 But, you can add a lot of constraints to an Intent, which you can investigate when performing:
 ```
-add-host-intent --help
+onos> add-host-intent --help
 ```
 
 The result of the command is a long list of options.
@@ -292,7 +292,7 @@ You as a person, don't have to think about how the traffic needs to go - this ca
 The controller checks on the Intents and the status of the network any moment.
 Would you remove an Intent for traffic between Host 1 and Host 2, using the following command:
 ```
-remove-intent org.onosproject.ifwd 00:00:00:00:00:01/None00:00:00:00:00:02/None
+onos> remove-intent org.onosproject.ifwd 00:00:00:00:00:01/None00:00:00:00:00:02/None
 ```
 the result would be that the controller removes the flow rules which below to this Intent.
 You can see this in the flow tables of the involved switches:
@@ -316,7 +316,7 @@ __Extra__: _You can also click a switch, after which we see how many flows there
 Intents also consider the status of the network.
 You can look what happens in the flow tables and topology when you disable a link between two host (temporarely), by performing the following command in Mininet:
 ```
-link s2 s3 down         ! use 'up' instead of 'down' to restore the link
+mininet> link s2 s3 down         ! use 'up' instead of 'down' to restore the link
 ```
 
 As you will see, even when the link is down, communication is still possible, but takes another route.
