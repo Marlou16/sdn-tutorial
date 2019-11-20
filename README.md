@@ -35,7 +35,7 @@ Dit doen we met de bestanden beschikbaar in de `vm` folder en de tool `Vagrant`,
 * Ga in de Explorer naar een gewenste locatie en open `Git Bash` door dit te kiezen als je op de rechtermuisknop drukt,
 * In `Git Bash`, voer de volgende commando's uit:
     * `git clone https://github.com/Marlou16/sdn-tutorial`
-    * `cd vm`
+    * `cd sdn-tutorial/vm`
     * `vagrant up`
 
 Tijdens de installatie wordt de VM al opgestart en zie je allerlei logging in je bash voorbijkomen.

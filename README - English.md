@@ -33,7 +33,7 @@ The VM can be used via `VirtualBox`:
 * Find a preferred spot in your Explorer and open `Git Bash` using the right mouse button,
 * In `Git Bash`, perform the following commands:
     * `git clone https://github.com/Marlou16/sdn-tutorial`
-    * `cd vm`
+    * `cd sdn-tutorial/vm`
     * `vagrant up`
 
 Using the installation, the VM will start and all kinds of logging will appear in your bash.
