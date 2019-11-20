@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "peru/ubuntu-18.04-desktop-amd64"
-  config.vm.box_version = "20190312.01"
+  config.vm.box_version = "20190901.01"
   config.vm.provider "virtualbox" do |vb|
     vb.name = "KPN SDN Tutorial"
     vb.gui = true
