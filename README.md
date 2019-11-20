@@ -28,23 +28,28 @@ Wees gedurende de tutorial vooral niet bang om random dingen te proberen en op t
 
 &nbsp;
 ## Voorbereiding <a name="voorbereiding"></a>
-Voordat we kunnen beginnen moeten we onze virtuele omgeving opzetten.
-Dit doen we met de bestanden beschikbaar in de `vm` folder en de tool `Vagrant`, die de virtuele omgeving installeert en configureert. De VM is vervolgens te gebruiken met `VirtualBox`:
-* Installeer [Vagrant](https://www.vagrantup.com/downloads.html) en [VirtualBox](https://www.virtualbox.org/wiki/Downloads),
-* Installeer [Git](https://git-scm.com/downloads),
-* Ga in de Explorer naar een gewenste locatie en open `Git Bash` door dit te kiezen als je op de rechtermuisknop drukt,
-* In `Git Bash`, voer de volgende commando's uit:
-    * `git clone https://github.com/Marlou16/sdn-tutorial`
-    * `cd sdn-tutorial/vm`
-    * `vagrant up`
 
-Tijdens de installatie wordt de VM al opgestart en zie je allerlei logging in je bash voorbijkomen.
+__Belangrijk__ : _In verband met licentieproblemen werkt deze manier van installeren niet meer._
+Het verkrijgen van een geschikte VM om de opdrachten uit te voeren verloopt met USB of via e-mail.
+
+~~Voordat we kunnen beginnen moeten we onze virtuele omgeving opzetten.~~
+~~Dit doen we met de bestanden beschikbaar in de `vm` folder en de tool `Vagrant`, die de virtuele omgeving installeert en configureert. De VM is vervolgens te gebruiken met `VirtualBox`:~~
+* ~~Installeer [Vagrant](https://www.vagrantup.com/downloads.html) en [VirtualBox](https://www.virtualbox.org/wiki/Downloads),~~
+* ~~Installeer [Git](https://git-scm.com/downloads),~~
+* ~~Ga in de Explorer naar een gewenste locatie en open `Git Bash` door dit te kiezen als je op de rechtermuisknop drukt,~~
+* ~~In `Git Bash`, voer de volgende commando's uit:~~
+    * ~~`git clone https://github.com/Marlou16/sdn-tutorial`~~
+    * ~~`cd sdn-tutorial/vm`~~
+    * ~~`vagrant up`~~
+
+~~Tijdens de installatie wordt de VM al opgestart en zie je allerlei logging in je bash voorbijkomen.~~
+
 Na de installatie is de VM klaar voor gebruik en kan je inloggen met `kpn/kpn`.
 
 Belangrijk in de virtuele omgeving is de toestcombinatie `Ctrl+Alt+T`.
 Hiermee open je een **terminal**.
 Als je de eerste keer de VM gaat gebruiken, open een terminal en voer commando `./menu_favorites.sh` uit.
-Hiermee maak je een aantal desktop icons direct beschikbaar, handig!
+Hiermee maak je een aantal desktop icons direct beschikbaar, handig!~~
 
 
 Voor de tutorial heb je ook nog de bestanden _triangle.py_ en _onos-app-ifwd-1.9.0-SNAPSHOT.oar_ nodig.

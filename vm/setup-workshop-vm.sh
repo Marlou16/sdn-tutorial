@@ -18,6 +18,7 @@ sudo apt-get install -y \
   software-properties-common \
 
 # install the correct Oracle Java, needed for ONOS
+# IMPORTANT, THIS STEP DOESN'T WORK ANY MORE BECAUSE THE PPA IS DISCONTINUED. INSTALLING ORACLE JAVA DOESN'T SUCCEED
 echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y install oracle-java8-installer oracle-java8-set-default

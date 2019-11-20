@@ -25,18 +25,23 @@ If you are not familiar with these things, don't be afraid to aks your friend th
 
 &nbsp;
 ## Preparation <a name="voorbereiding"></a>
-Before we can start, we need to setup our virtual environment.
-For this, you can use the files available in the `vm` folder and the tool `Vagrant`, which will spin up the virtual machine and configure it.
-The VM can be used via `VirtualBox`:
-* Install [Vagrant](https://www.vagrantup.com/downloads.html) en [VirtualBox](https://www.virtualbox.org/wiki/Downloads),
-* Install [Git](https://git-scm.com/downloads),
-* Find a preferred spot in your Explorer and open `Git Bash` using the right mouse button,
-* In `Git Bash`, perform the following commands:
-    * `git clone https://github.com/Marlou16/sdn-tutorial`
-    * `cd sdn-tutorial/vm`
-    * `vagrant up`
 
-Using the installation, the VM will start and all kinds of logging will appear in your bash.
+__Important__ : _Creating the VM using Vagrant doesn't work due to changed program structures_.
+Retrieving a correct VM is done via USB or e-mail.
+
+~~Before we can start, we need to setup our virtual environment.~~
+~~For this, you can use the files available in the `vm` folder and the tool `Vagrant`, which will spin up the virtual machine and configure it.~~
+~~The VM can be used via `VirtualBox`:~~
+* ~~Install [Vagrant](https://www.vagrantup.com/downloads.html) en [VirtualBox](https://www.virtualbox.org/wiki/Downloads),~~
+* ~~Install [Git](https://git-scm.com/downloads),~~
+* ~~Find a preferred spot in your Explorer and open `Git Bash` using the right mouse button,~~
+* ~~In `Git Bash`, perform the following commands:~~
+    * ~~`git clone https://github.com/Marlou16/sdn-tutorial`~~
+    * ~~`cd sdn-tutorial/vm`~~
+    * ~~`vagrant up`~~
+
+~~Using the installation, the VM will start and all kinds of logging will appear in your bash.~~
+
 After the installation you are ready to go and login with `kpn/kpn`.
 
 Important in the VM is the combination `Ctrl+Alt+T`, which gives you a new **terminal**.
